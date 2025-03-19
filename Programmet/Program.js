@@ -1,6 +1,11 @@
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
 let inputY = windowHeight/8;
+let sumInput
+let periodeInput
+let sumInputgem
+let periodeInputGem
+let indtægterOgUdgifterText
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -25,10 +30,10 @@ function gåTilbageTilForsiden() {
 }
 
 function inputPeriodeOgSum() {
-  let sumInput = createInput();
+  sumInput = createInput();
   sumInput.position(windowWidth/4+20, inputY);
 
-  let periodeInput = createInput();
+  periodeInput = createInput();
   periodeInput.position(windowWidth*6.25/10, inputY);
 }
 
@@ -46,10 +51,22 @@ function inputPeriodeOgSumText() {
 function låsPeriodeOgSum(inputPeriodeOgSum) {
   let låsPeriodeOgSumKnap = createButton("Ok");
   låsPeriodeOgSumKnap.position(windowWidth*9/10-100, inputY);
-  låsPeriodeOgSumKnap.mousePressed(låsPeriodeOgSumAttribute);
+  låsPeriodeOgSumKnap.mousePressed(låsOgGemPeriodeOgSumAttribute);
 }
 
-function låsPeriodeOgSumAttribute (låsPeriodeOgSum) {
-  sumInput.attribute(disabled);
-  periodeInput.attribute(disabled);
+function låsOgGemPeriodeOgSumAttribute(låsPeriodeOgSum) {
+  sumInput.attribute("disabled", "");
+  periodeInput.attribute("disabled", "");
+
+  sumInputgem = sumInput.value();
+  periodeInputGem = periodeInput.value();
+}
+
+function inputIndtægterOgUdgifterText() {
+  indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", "Mad og drikke", 
+  "Transport", "Shopping", "Andre udgifter"];
+
+  for (let i = 0; i < indtægterOgUdgifterText.length; i++) {
+    text
+  }
 }
