@@ -17,7 +17,7 @@ function setup() {
 
   inputPeriodeOgSum();
   låsPeriodeOgSum();
-  
+  frameRate(60)
 }
 
 function draw() {
@@ -67,14 +67,18 @@ function låsOgGemPeriodeOgSumAttribute(låsPeriodeOgSum) {
 
 function inputIndtægterOgUdgifterText() {
   indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", "Mad og drikke", 
-  "Transport", "Shopping", "Andre udgifter"];
+    "Transport", "Shopping", "Andre udgifter"];
 
   console.log(indtægterOgUdgifterText)
 
   for (let i = 0; i < indtægterOgUdgifterText.length; i++) {
     text(indtægterOgUdgifterText[i],inputIndtægterOgUdgifterX, inputIndtægterOgUdgifterY)
 
-    inputIndtægterOgUdgifterY += 20;
+    if (inputIndtægterOgUdgifterY > 20*(indtægterOgUdgifterText.length-1)) {
+      inputIndtægterOgUdgifterY = 20
+    }
+
+    else {inputIndtægterOgUdgifterY += 20;}
 
     console.log(inputIndtægterOgUdgifterY)
   }
