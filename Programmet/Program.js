@@ -6,6 +6,8 @@ let periodeInput
 let sumInputgem
 let periodeInputGem
 let indtægterOgUdgifterText
+let inputIndtægterOgUdgifterX = 1;
+let inputIndtægterOgUdgifterY = windowHeight/4;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -22,6 +24,7 @@ function draw() {
   background(255);
   
   inputPeriodeOgSumText();
+  inputIndtægterOgUdgifterText();
 
 }
 
@@ -66,7 +69,13 @@ function inputIndtægterOgUdgifterText() {
   indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", "Mad og drikke", 
   "Transport", "Shopping", "Andre udgifter"];
 
+  console.log(indtægterOgUdgifterText)
+
   for (let i = 0; i < indtægterOgUdgifterText.length; i++) {
-    text
+    text(indtægterOgUdgifterText[i],inputIndtægterOgUdgifterX, inputIndtægterOgUdgifterY)
+
+    inputIndtægterOgUdgifterY += 20;
+
+    console.log(inputIndtægterOgUdgifterY)
   }
 }
