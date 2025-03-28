@@ -3,14 +3,21 @@ let windowHeight = window.innerHeight;
 let inputY = windowHeight/8;
 let sumInput
 let periodeInput
-let sumInputgem
+let sumInputGem
 let periodeInputGem
 let indtægterOgUdgifterText
 let textIndtægterOgUdgifterX = 1;
 let textIndtægterOgUdgifterY = windowHeight/2.5;
 let inputLøn
-let inputUdgifter
+let inputHusleje
+let inputForsikringsafgifter
+let inputAndreUdgifter
 let inputIndtægterOgUdgifterX
+let låsIndtægterOgUdgifterKnapX
+let inputLønGem
+let inputHuslejeGem
+let inputForsikringsafgifterGem
+let inputAndreUdgifterGem
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -21,6 +28,7 @@ function setup() {
   inputPeriodeOgSum();
   låsPeriodeOgSum();
   inputIndtægterOgUdgifter();
+  låsIndtægterOgUdgifter();
 }
 
 function draw() {
@@ -64,7 +72,7 @@ function låsOgGemPeriodeOgSumAttribute(låsPeriodeOgSum) {
   sumInput.attribute("disabled", "");
   periodeInput.attribute("disabled", "");
 
-  sumInputgem = sumInput.value();
+  sumInputGem = sumInput.value();
   periodeInputGem = periodeInput.value();
 }
 
@@ -88,6 +96,7 @@ function inputIndtægterOgUdgifterText() {
     textIndtægterOgUdgifterX = 1;
 
     text(indtægterOgUdgifterText[i], textIndtægterOgUdgifterX, textIndtægterOgUdgifterY)
+    text("kr.", textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
   }
 }
 
@@ -97,9 +106,34 @@ function inputIndtægterOgUdgifter() {
   inputLøn = createInput();
   inputLøn.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
 
-  for (i = 0; i < 3; i++) {
-    textIndtægterOgUdgifterY += 25;
-    inputUdgifter = createInput();
-    inputUdgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
-  }
+  textIndtægterOgUdgifterY += 25;
+  inputHusleje = createInput();
+  inputHusleje.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  
+  textIndtægterOgUdgifterY += 25;
+  inputForsikringsafgifter = createInput();
+  inputForsikringsafgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+
+  textIndtægterOgUdgifterY += 25;
+  inputAndreUdgifter = createInput();
+  inputAndreUdgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+}
+
+function låsIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
+  låsIndtægterOgUdgifterKnapX = windowWidth/3.5
+  let låsIndtægterOgUdgifterKnap = createButton("Ok");
+  låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
+  låsIndtægterOgUdgifterKnap.mousePressed(låsOgGemIndtægterOgUdgifterAttribute);
+}
+
+function låsOgGemIndtægterOgUdgifterAttribute(inputIndtægterOgUdgifter) {
+  inputLøn.attribute("disabled", "");
+  inputHusleje.attribute("disabled", "");
+  inputForsikringsafgifter.attribute("disabled", "");
+  inputAndreUdgifter.attribute("disabled", "");
+
+  inputLønGem = inputLøn.value();
+  inputHuslejeGem = inputHusleje.value();
+  inputForsikringsafgifterGem = inputForsikringsafgifter.value();
+  inputAndreUdgifterGem = inputAndreUdgifter.value();
 }
