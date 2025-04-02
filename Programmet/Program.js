@@ -36,6 +36,8 @@ function draw() {
   
   inputPeriodeOgSumText();
   inputIndtægterOgUdgifterText();
+  låsOgTjekIndtægterOgUdgifter();
+  console.log(inputLønGem)
 
 }
 
@@ -105,6 +107,7 @@ function inputIndtægterOgUdgifter() {
 
   inputLøn = createInput();
   inputLøn.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  inputLøn.input(updateInput)
 
   textIndtægterOgUdgifterY += 25;
   inputHusleje = createInput();
@@ -119,15 +122,20 @@ function inputIndtægterOgUdgifter() {
   inputAndreUdgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
 }
 
+function updateInput(){
+
+  inputLønGem = inputLøn.value()
+}
+
 function låsIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
-  låsIndtægterOgUdgifterKnap.mousePressed(låsOgGemIndtægterOgUdgifterAttribute);
+  låsIndtægterOgUdgifterKnap.mousePressed(gemIndtægterOgUdgifter);
 }
 
-function låsOgGemIndtægterOgUdgifterAttribute(inputIndtægterOgUdgifter) {
-  inputLøn.attribute("disabled", "");
+function gemIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
+  //inputLøn.attribute("disabled", "");
   inputHusleje.attribute("disabled", "");
   inputForsikringsafgifter.attribute("disabled", "");
   inputAndreUdgifter.attribute("disabled", "");
@@ -136,4 +144,17 @@ function låsOgGemIndtægterOgUdgifterAttribute(inputIndtægterOgUdgifter) {
   inputHuslejeGem = inputHusleje.value();
   inputForsikringsafgifterGem = inputForsikringsafgifter.value();
   inputAndreUdgifterGem = inputAndreUdgifter.value();
+}
+
+function låsOgTjekIndtægterOgUdgifter(gemIndtægterOgUdgifter, inputIndtægterOgUdgifter, låsIndtægterOgUdgifter) {
+  frameRate(0);
+  console.log(inputLøn.value())
+  if (inputLønGem == "") {
+    textIndtægterOgUdgifterY += 15;
+    text("Udfyld alle felter!", inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  }
+
+  else if (inputLønGem >= 0) {
+    inputLøn.attribute("disabled", "");
+  }
 }
