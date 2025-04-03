@@ -33,22 +33,20 @@ function setup() {
 
 function draw() {
   background(255);
-  statiskEllerDynamiskTekst()
+  statiskTekst()
+  inputPeriodeOgSumText();
+  inputIndtægterOgUdgifterText();
+  opdaterIndtægterOgUdgifter();
+  låsOgTjekIndtægterOgUdgifter();
 }
 
 function gåTilbageTilForsiden() {
   window.location.href = 'index.html';
 }
 
-function statiskEllerDynamiskTekst() {
-  if (frameRate(0)) {
-    inputPeriodeOgSumText();
-    inputIndtægterOgUdgifterText();
-  }
-
-  else if (frameRate(60)) {
-    opdaterIndtægterOgUdgifter();
-    låsOgTjekIndtægterOgUdgifter();
+function statiskTekst() {
+  if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText()) {
+    frameRate(0)
   }
 }
 
@@ -91,7 +89,7 @@ function inputIndtægterOgUdgifterText() {
   
   if (textIndtægterOgUdgifterY > (20*(indtægterOgUdgifterText.length-1))+windowHeight/4) {
     textIndtægterOgUdgifterY = windowHeight/2.5
-    text(indtægterOgUdgifterText[0], textIndtægterOgUdgifterX, textIndtægterOgUdgifterY)
+    text(indtægterOgUdgifterText[0], textIndtægterOgUdgifterX=1, textIndtægterOgUdgifterY)
   }
 
   if (textIndtægterOgUdgifterY > (20*(indtægterOgUdgifterText.length-1))+windowHeight/4) {
@@ -133,7 +131,7 @@ function låsIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
-  låsIndtægterOgUdgifterKnap.mousePressed(gemIndtægterOgUdgifter);
+  låsIndtægterOgUdgifterKnap.mousePressed(låsOgTjekIndtægterOgUdgifter);
 }
 
 function gemIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
@@ -155,7 +153,6 @@ function opdaterIndtægterOgUdgifter(){
 
 function låsOgTjekIndtægterOgUdgifter() {
   if (inputLønGem.length == 0) {
-    fill(255,0,0)
     text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
   }
 
