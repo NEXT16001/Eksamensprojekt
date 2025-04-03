@@ -33,16 +33,23 @@ function setup() {
 
 function draw() {
   background(255);
-  
-  inputPeriodeOgSumText();
-  inputIndtægterOgUdgifterText();
-  låsOgTjekIndtægterOgUdgifter();
-  console.log(inputLønGem)
-
+  statiskEllerDynamiskTekst()
 }
 
 function gåTilbageTilForsiden() {
   window.location.href = 'index.html';
+}
+
+function statiskEllerDynamiskTekst() {
+  if (frameRate(0)) {
+    inputPeriodeOgSumText();
+    inputIndtægterOgUdgifterText();
+  }
+
+  else if (frameRate(60)) {
+    opdaterIndtægterOgUdgifter();
+    låsOgTjekIndtægterOgUdgifter();
+  }
 }
 
 function inputPeriodeOgSum() {
@@ -79,7 +86,6 @@ function låsOgGemPeriodeOgSumAttribute(låsPeriodeOgSum) {
 }
 
 function inputIndtægterOgUdgifterText() {
-  frameRate(0)
   indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", 
   "Andre udgifter evt. lån"];
   
@@ -107,7 +113,8 @@ function inputIndtægterOgUdgifter() {
 
   inputLøn = createInput();
   inputLøn.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
-  inputLøn.input(updateInput)
+  inputLøn.input(opdaterIndtægterOgUdgifter)
+  inputLøn.input(opdaterIndtægterOgUdgifter)
 
   textIndtægterOgUdgifterY += 25;
   inputHusleje = createInput();
@@ -120,11 +127,6 @@ function inputIndtægterOgUdgifter() {
   textIndtægterOgUdgifterY += 25;
   inputAndreUdgifter = createInput();
   inputAndreUdgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
-}
-
-function updateInput(){
-
-  inputLønGem = inputLøn.value()
 }
 
 function låsIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
@@ -140,21 +142,24 @@ function gemIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
   inputForsikringsafgifter.attribute("disabled", "");
   inputAndreUdgifter.attribute("disabled", "");
 
-  inputLønGem = inputLøn.value();
   inputHuslejeGem = inputHusleje.value();
   inputForsikringsafgifterGem = inputForsikringsafgifter.value();
   inputAndreUdgifterGem = inputAndreUdgifter.value();
 }
 
-function låsOgTjekIndtægterOgUdgifter(gemIndtægterOgUdgifter, inputIndtægterOgUdgifter, låsIndtægterOgUdgifter) {
-  frameRate(0);
-  console.log(inputLøn.value())
-  if (inputLønGem == "") {
-    textIndtægterOgUdgifterY += 15;
-    text("Udfyld alle felter!", inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+function opdaterIndtægterOgUdgifter(){
+  //background(255)
+  inputLønGem = inputLøn.value()
+  console.log(inputLønGem)
+}
+
+function låsOgTjekIndtægterOgUdgifter() {
+  if (inputLønGem.length == 0) {
+    fill(255,0,0)
+    text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
   }
 
-  else if (inputLønGem >= 0) {
+  else if (inputLønGem.length > 0) {
     inputLøn.attribute("disabled", "");
   }
 }
