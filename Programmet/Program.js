@@ -26,18 +26,17 @@ function setup() {
   knapForside.mousePressed(gåTilbageTilForsiden);
 
   inputPeriodeOgSum();
-  låsPeriodeOgSum();
+  periodeOgSumKnap();
   inputIndtægterOgUdgifter();
-  låsIndtægterOgUdgifter();
+  indtægterOgUdgifterKnap();
 }
 
 function draw() {
   background(255);
-  statiskTekst()
-  inputPeriodeOgSumText();
-  inputIndtægterOgUdgifterText();
-  opdaterIndtægterOgUdgifter();
-  låsOgTjekIndtægterOgUdgifter();
+  statiskTekst();
+  tjekPeriodeOgSum();
+  gemOgOpdaterIndtægterOgUdgifter();
+  tjekIndtægterOgUdgifter();
 }
 
 function gåTilbageTilForsiden() {
@@ -53,9 +52,11 @@ function statiskTekst() {
 function inputPeriodeOgSum() {
   sumInput = createInput();
   sumInput.position(windowWidth/4+20, inputY);
+  sumInput.input(gemPeriodeOgSum);
 
   periodeInput = createInput();
   periodeInput.position(windowWidth*6.25/10, inputY);
+  periodeInput.input(gemPeriodeOgSum);
 }
 
 function inputPeriodeOgSumText() {
@@ -69,18 +70,25 @@ function inputPeriodeOgSumText() {
   }
 }
 
-function låsPeriodeOgSum(inputPeriodeOgSum) {
+function periodeOgSumKnap() {
   let låsPeriodeOgSumKnap = createButton("Ok");
   låsPeriodeOgSumKnap.position(windowWidth*9/10-100, inputY);
-  låsPeriodeOgSumKnap.mousePressed(låsOgGemPeriodeOgSumAttribute);
+  låsPeriodeOgSumKnap.mousePressed(gemPeriodeOgSum);
 }
 
-function låsOgGemPeriodeOgSumAttribute(låsPeriodeOgSum) {
-  sumInput.attribute("disabled", "");
-  periodeInput.attribute("disabled", "");
-
+function gemPeriodeOgSum() {
   sumInputGem = sumInput.value();
   periodeInputGem = periodeInput.value();
+}
+
+function tjekPeriodeOgSum() {
+  if (sumInputGem.length == 0) {
+    text("Udfyld alle feltet!", windowWidth/4+20, inputY+25);
+  }
+  
+  if (periodeInputGem.length == 0) {
+    text("Udfyld alle feltet!", windowWidth*6.25/10, inputY+25);
+  }
 }
 
 function inputIndtægterOgUdgifterText() {
@@ -111,52 +119,69 @@ function inputIndtægterOgUdgifter() {
 
   inputLøn = createInput();
   inputLøn.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
-  inputLøn.input(opdaterIndtægterOgUdgifter)
-  inputLøn.input(opdaterIndtægterOgUdgifter)
+  inputLøn.input(gemOgOpdaterIndtægterOgUdgifter)
 
   textIndtægterOgUdgifterY += 25;
   inputHusleje = createInput();
   inputHusleje.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  inputHusleje.input(gemOgOpdaterIndtægterOgUdgifter)
   
   textIndtægterOgUdgifterY += 25;
   inputForsikringsafgifter = createInput();
   inputForsikringsafgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  inputForsikringsafgifter.input(gemOgOpdaterIndtægterOgUdgifter)
 
   textIndtægterOgUdgifterY += 25;
   inputAndreUdgifter = createInput();
   inputAndreUdgifter.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
+  inputAndreUdgifter.input(gemOgOpdaterIndtægterOgUdgifter)
 }
 
-function låsIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
+function indtægterOgUdgifterKnap(inputIndtægterOgUdgifter) {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
-  låsIndtægterOgUdgifterKnap.mousePressed(låsOgTjekIndtægterOgUdgifter);
+  låsIndtægterOgUdgifterKnap.mousePressed(låsIndtægterOgUdgifter);
 }
 
-function gemIndtægterOgUdgifter(inputIndtægterOgUdgifter) {
-  //inputLøn.attribute("disabled", "");
-  inputHusleje.attribute("disabled", "");
-  inputForsikringsafgifter.attribute("disabled", "");
-  inputAndreUdgifter.attribute("disabled", "");
-
+function gemOgOpdaterIndtægterOgUdgifter(){
+  inputLønGem = inputLøn.value();
   inputHuslejeGem = inputHusleje.value();
   inputForsikringsafgifterGem = inputForsikringsafgifter.value();
   inputAndreUdgifterGem = inputAndreUdgifter.value();
 }
 
-function opdaterIndtægterOgUdgifter(){
-  //background(255)
-  inputLønGem = inputLøn.value()
-  console.log(inputLønGem)
-}
-
-function låsOgTjekIndtægterOgUdgifter() {
+function tjekIndtægterOgUdgifter() {
   if (inputLønGem.length == 0) {
     text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
   }
 
-  else if (inputLønGem.length > 0) {
+  if (inputHuslejeGem.length == 0) {
+    text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
+  }
+
+  if (inputForsikringsafgifterGem.length == 0) {
+    text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
+  }
+  if (inputAndreUdgifterGem.length == 0) {
+    text("Udfyld alle felter!", windowWidth/8, windowHeight/2.5+(25*4));
+  }
+}
+
+function låsIndtægterOgUdgifter() {
+  if (inputLønGem.length > 0) {
     inputLøn.attribute("disabled", "");
+  }
+
+  if (inputHuslejeGem.length > 0) {
+    inputHusleje.attribute("disabled", "");
+  }
+
+  if (inputForsikringsafgifterGem.length > 0) {
+    inputForsikringsafgifter.attribute("disabled", "");
+  }
+
+  if (inputAndreUdgifterGem.length > 0) {
+    inputAndreUdgifter.attribute("disabled", "");
   }
 }
