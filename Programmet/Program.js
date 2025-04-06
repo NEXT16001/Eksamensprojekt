@@ -34,6 +34,7 @@ function setup() {
 function draw() {
   background(255);
   statiskTekst();
+  gemPeriodeOgSum();
   tjekPeriodeOgSum();
   gemOgOpdaterIndtægterOgUdgifter();
   tjekIndtægterOgUdgifter();
@@ -91,6 +92,16 @@ function tjekPeriodeOgSum() {
   }
 }
 
+function låsPeriodeOgSum() {
+  if (sumInputGem.length > 0) {
+    sumInput.attribute("disabled", "");
+  }
+
+  if (periodeInputGem.length > 0) {
+    periodeInput.attribute("disabled", "");
+  }
+}
+
 function inputIndtægterOgUdgifterText() {
   indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", 
   "Andre udgifter evt. lån"];
@@ -137,7 +148,7 @@ function inputIndtægterOgUdgifter() {
   inputAndreUdgifter.input(gemOgOpdaterIndtægterOgUdgifter)
 }
 
-function indtægterOgUdgifterKnap(inputIndtægterOgUdgifter) {
+function indtægterOgUdgifterKnap() {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
