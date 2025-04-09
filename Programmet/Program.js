@@ -18,6 +18,10 @@ let inputLønGem
 let inputHuslejeGem
 let inputForsikringsafgifterGem
 let inputAndreUdgifterGem
+let ForventetBesparelse
+let månedensBudget
+let budgetX = windowWidth/2.75;
+let budgetY = windowHeight/2.75;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -38,6 +42,7 @@ function draw() {
   tjekPeriodeOgSum();
   gemOgOpdaterIndtægterOgUdgifter();
   tjekIndtægterOgUdgifter();
+  displayBudget();
 }
 
 function gåTilbageTilForsiden() {
@@ -74,7 +79,7 @@ function inputPeriodeOgSumText() {
 function periodeOgSumKnap() {
   let låsPeriodeOgSumKnap = createButton("Ok");
   låsPeriodeOgSumKnap.position(windowWidth*9/10-100, inputY);
-  låsPeriodeOgSumKnap.mousePressed(gemPeriodeOgSum);
+  låsPeriodeOgSumKnap.mousePressed(låsPeriodeOgSum);
 }
 
 function gemPeriodeOgSum() {
@@ -152,7 +157,7 @@ function indtægterOgUdgifterKnap() {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
-  låsIndtægterOgUdgifterKnap.mousePressed(låsIndtægterOgUdgifter);
+  låsIndtægterOgUdgifterKnap.mousePressed(beregnBudget);
 }
 
 function gemOgOpdaterIndtægterOgUdgifter(){
@@ -195,4 +200,16 @@ function låsIndtægterOgUdgifter() {
   if (inputAndreUdgifterGem.length > 0) {
     inputAndreUdgifter.attribute("disabled", "");
   }
+}
+
+function beregnBudget() {
+  låsIndtægterOgUdgifter();
+  ForventetBesparelse = sumInputGem/periodeInputGem;
+  månedensBudget = inputLønGem - ForventetBesparelse - inputHuslejeGem - inputForsikringsafgifterGem - 
+  inputAndreUdgifterGem;
+  console.log(månedensBudget)
+}
+
+function displayBudget() {
+  text(`Månedens budget: ${månedensBudget} kr.`,budgetX ,budgetY);
 }
