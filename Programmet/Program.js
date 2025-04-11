@@ -22,6 +22,12 @@ let ForventetBesparelse
 let månedensBudget
 let budgetX = windowWidth/2.75;
 let budgetY = windowHeight/2.75;
+let inputForbrugX
+let inputMadOgDrikke
+let inputShopping
+let inputTransport
+let inputAndetForbrug
+let månedensBesparelse
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -33,6 +39,8 @@ function setup() {
   periodeOgSumKnap();
   inputIndtægterOgUdgifter();
   indtægterOgUdgifterKnap();
+  inputForbrug();
+  ForbrugKnap();
 }
 
 function draw() {
@@ -43,6 +51,9 @@ function draw() {
   gemOgOpdaterIndtægterOgUdgifter();
   tjekIndtægterOgUdgifter();
   displayBudget();
+  gemOgOpdaterForbrug();
+  tjekForbrug();
+  displayBesparelse();
 }
 
 function gåTilbageTilForsiden() {
@@ -50,7 +61,7 @@ function gåTilbageTilForsiden() {
 }
 
 function statiskTekst() {
-  if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText()) {
+  if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText(), forbrugText()) {
     frameRate(0)
   }
 }
@@ -207,9 +218,95 @@ function beregnBudget() {
   ForventetBesparelse = sumInputGem/periodeInputGem;
   månedensBudget = inputLønGem - ForventetBesparelse - inputHuslejeGem - inputForsikringsafgifterGem - 
   inputAndreUdgifterGem;
-  console.log(månedensBudget)
 }
 
 function displayBudget() {
   text(`Månedens budget: ${månedensBudget} kr.`,budgetX ,budgetY);
+
+  if (månedensBudget == undefined) {
+    månedensBudget = ""
+  }
+}
+
+function forbrugText() {
+  let forbrugList = ["Mad og drikke", "Shopping", "Transport", "Andet forbrug"];
+  textIndtægterOgUdgifterY = windowHeight/2.5;
+  if (textIndtægterOgUdgifterY > (20*(forbrugList.length-1))+windowHeight/4) {
+    text(forbrugList[0], budgetX, textIndtægterOgUdgifterY)
+    text("kr.", windowWidth/1.75, textIndtægterOgUdgifterY)
+  }
+
+  for (i = 1; i < forbrugList.length; i++) {
+    textIndtægterOgUdgifterY += 25;
+    text(forbrugList[i], budgetX, textIndtægterOgUdgifterY);
+    text("kr.", windowWidth/1.75, textIndtægterOgUdgifterY)
+  }
+}
+
+function inputForbrug() {
+  inputForbrugX = windowWidth/2.3;
+  textIndtægterOgUdgifterY = windowHeight/2.5;
+
+  inputMadOgDrikke = createInput();
+  inputMadOgDrikke.position(inputForbrugX, textIndtægterOgUdgifterY);
+  inputMadOgDrikke.input(gemOgOpdaterForbrug)
+
+  textIndtægterOgUdgifterY += 25;
+  inputShopping = createInput();
+  inputShopping.position(inputForbrugX, textIndtægterOgUdgifterY);
+  inputShopping.input(gemOgOpdaterForbrug)
+
+  textIndtægterOgUdgifterY += 25;
+  inputTransport = createInput();
+  inputTransport.position(inputForbrugX, textIndtægterOgUdgifterY);
+  inputTransport.input(gemOgOpdaterForbrug)
+
+  textIndtægterOgUdgifterY += 25;
+  inputAndetForbrug = createInput();
+  inputAndetForbrug.position(inputForbrugX, textIndtægterOgUdgifterY);
+  inputAndetForbrug.input(gemOgOpdaterForbrug)
+}
+
+function gemOgOpdaterForbrug(){
+  inputMadOgDrikkeGem = inputMadOgDrikke.value();
+  inputShoppingGem = inputShopping.value();
+  inputTransportGem = inputTransport.value();
+  inputAndetForbrugGem = inputAndetForbrug.value();
+}
+
+function ForbrugKnap() {
+  låsIndtægterOgUdgifterKnapX = windowWidth/3.5
+  let låsIndtægterOgUdgifterKnap = createButton("Ok");
+  låsIndtægterOgUdgifterKnap.position(windowWidth/1.65, textIndtægterOgUdgifterY);
+  låsIndtægterOgUdgifterKnap.mousePressed(beregnBesparelse);
+}
+
+function tjekForbrug() {
+  if (inputMadOgDrikkeGem.length == 0) {
+    text("Udfyld alle felter!", inputForbrugX, windowHeight/2.5+(25*4));
+  }
+
+  if (inputShoppingGem.length == 0) {
+    text("Udfyld alle felter!", inputForbrugX, windowHeight/2.5+(25*4));
+  }
+
+  if (inputTransportGem.length == 0) {
+    text("Udfyld alle felter!", inputForbrugX, windowHeight/2.5+(25*4));
+  }
+  if (inputAndetForbrugGem.length == 0) {
+    text("Udfyld alle felter!", inputForbrugX, windowHeight/2.5+(25*4));
+  }
+}
+
+function beregnBesparelse() {
+  månedensBesparelse = månedensBudget-inputMadOgDrikkeGem-inputShoppingGem-inputTransportGem-inputAndetForbrugGem+
+  ForventetBesparelse;
+}
+
+function displayBesparelse() {
+  text(`Månedens besparelse: ${månedensBesparelse} kr.`,budgetX ,budgetY+25*5.5);
+
+  if (månedensBesparelse == undefined) {
+    månedensBesparelse = ""
+  }
 }
