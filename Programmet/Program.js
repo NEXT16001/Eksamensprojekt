@@ -20,7 +20,7 @@ let inputForsikringsafgifterGem
 let inputAndreUdgifterGem
 let ForventetBesparelse
 let månedensBudget
-let budgetX = windowWidth/2.75;
+let budgetX = windowWidth/2.8;
 let budgetY = windowHeight/2.75;
 let inputForbrugX
 let inputMadOgDrikke
@@ -28,6 +28,19 @@ let inputShopping
 let inputTransport
 let inputAndetForbrug
 let månedensBesparelse
+let graf
+let grafX
+let grafY
+let grafW
+let grafH
+let akseTitleX
+let akseTitleY
+let indreGraf
+let indreGrafX
+let indreGrafY
+let indreGrafW
+let indreGrafH
+let vandretLinje
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -50,10 +63,12 @@ function draw() {
   tjekPeriodeOgSum();
   gemOgOpdaterIndtægterOgUdgifter();
   tjekIndtægterOgUdgifter();
-  displayBudget();
+  visBudget();
   gemOgOpdaterForbrug();
   tjekForbrug();
-  displayBesparelse();
+  visBesparelse();
+  skabGraf();
+  skabIndreGraf();
 }
 
 function gåTilbageTilForsiden() {
@@ -220,7 +235,7 @@ function beregnBudget() {
   inputAndreUdgifterGem;
 }
 
-function displayBudget() {
+function visBudget() {
   text(`Månedens budget: ${månedensBudget} kr.`,budgetX ,budgetY);
 
   if (månedensBudget == undefined) {
@@ -244,7 +259,7 @@ function forbrugText() {
 }
 
 function inputForbrug() {
-  inputForbrugX = windowWidth/2.3;
+  inputForbrugX = windowWidth/2.325;
   textIndtægterOgUdgifterY = windowHeight/2.5;
 
   inputMadOgDrikke = createInput();
@@ -277,8 +292,8 @@ function gemOgOpdaterForbrug(){
 function ForbrugKnap() {
   låsIndtægterOgUdgifterKnapX = windowWidth/3.5
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
-  låsIndtægterOgUdgifterKnap.position(windowWidth/1.65, textIndtægterOgUdgifterY);
-  låsIndtægterOgUdgifterKnap.mousePressed(beregnBesparelse);
+  låsIndtægterOgUdgifterKnap.position(windowWidth/1.69, textIndtægterOgUdgifterY);
+  låsIndtægterOgUdgifterKnap.mousePressed(opdaterPeriodeOgSum);
 }
 
 function tjekForbrug() {
@@ -303,10 +318,41 @@ function beregnBesparelse() {
   ForventetBesparelse;
 }
 
-function displayBesparelse() {
+function visBesparelse() {
   text(`Månedens besparelse: ${månedensBesparelse} kr.`,budgetX ,budgetY+25*5.5);
 
   if (månedensBesparelse == undefined) {
     månedensBesparelse = ""
   }
+}
+
+function skabGraf() {
+  grafX = windowWidth/1.55;
+  grafY = windowHeight/3.25;
+  grafW = windowWidth/3.25;
+  grafH = windowHeight/3;
+  graf = rect(grafX, grafY, grafW, grafH);
+
+  akseTitleX = text('Besparelse', grafX+1, grafH/2+grafY);
+  akseTitleY = text('Antal Måneder', grafW/2+grafX-10, grafY+grafH-2.5);
+}
+
+function skabIndreGraf() {
+  indreGrafX = windowWidth/1.4;
+  indreGrafY = grafY;
+  indreGrafW = windowWidth/4.19;
+  indreGrafH = windowHeight/3.5;
+
+  indreGraf = rect(indreGrafX, indreGrafY, indreGrafW, indreGrafH)
+
+  vandretLinje = line(indreGrafX, indreGrafY+indreGrafH/2, indreGrafX+indreGrafW, indreGrafY+indreGrafH/2)
+}
+
+function opdaterPeriodeOgSum() {
+  beregnBesparelse();
+
+  periodeInputGem = --periodeInputGem
+  sumInputGem = sumInputGem-månedensBesparelse
+  console.log(periodeInputGem)
+  console.log(sumInputGem)
 }
