@@ -45,6 +45,7 @@ let yMaks
 let yMin
 let origo
 let xInterval
+let periodeAntal
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -58,6 +59,7 @@ function setup() {
   indtægterOgUdgifterKnap();
   inputForbrug();
   ForbrugKnap();
+  indreGrafIntervallerX();
 }
 
 function draw() {
@@ -71,7 +73,6 @@ function draw() {
   gemOgOpdaterForbrug();
   tjekForbrug();
   visBesparelse();
-  indreGrafIntervaller();
 }
 
 function gåTilbageTilForsiden() {
@@ -79,7 +80,8 @@ function gåTilbageTilForsiden() {
 }
 
 function statiskTekst() {
-  if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText(), forbrugText(), skabGraf(), skabIndreGraf()) {
+  if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText(), forbrugText(), skabGraf(), skabIndreGraf(),
+  indreGrafIntervallerY(), visIndreGrafIntervallerX()) {
     frameRate(0)
   }
 }
@@ -349,23 +351,31 @@ function skabIndreGraf() {
   indreGraf = rect(indreGrafX, indreGrafY, indreGrafW, indreGrafH)
 
   vandretLinje = line(indreGrafX, indreGrafY+indreGrafH/2, indreGrafX+indreGrafW, indreGrafY+indreGrafH/2)
-
-  origo = text('0', indreGrafX-10, indreGrafY+indreGrafH/2+5);
 }
 
-function indreGrafIntervaller() {
+function indreGrafIntervallerY() {
+  origo = text('0', indreGrafX-10, indreGrafY+indreGrafH/2+5);
+
   if (sumInputGem > 0) {
     yMaks = text(`${sumInputGem}`, indreGrafX-sumInputGem.length*7, indreGrafY+10);
     yMin = text(`-${sumInputGem}`, indreGrafX-sumInputGem.length*7-4, indreGrafY+indreGrafH);
   }
+}
 
+function indreGrafIntervallerX() {
   if (periodeInputGem > 0) {
     xInterval = indreGrafW/periodeInputGem;
+  }
+}
 
-    for (let i = 1; i < periodeInputGem+1; ++i) {
+function visIndreGrafIntervallerX() {
+  if (periodeInputGem > 0) {
+    for (let i = 1; i < periodeInputGem+1; i++) {
       text(`${i}`, (indreGrafX+xInterval)*i, indreGrafY+indreGrafH+10);
     }
   }
+
+  console.log(periodeInputGem);
 }
 
 function opdaterPeriodeOgSum() {
