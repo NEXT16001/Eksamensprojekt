@@ -363,19 +363,18 @@ function indreGrafIntervallerY() {
 }
 
 function indreGrafIntervallerX() {
-  if (periodeInputGem > 0) {
-    xInterval = indreGrafW/periodeInputGem;
+  if (periodeOgSumKnap()) {
+    låsPeriodeOgSumKnap.mousePressed(xInterval = indreGrafW/periodeInputGem)
   }
+  console.log(xInterval)
 }
 
 function visIndreGrafIntervallerX() {
-  if (periodeInputGem > 0) {
-    for (let i = 1; i < periodeInputGem+1; i++) {
+  if (indreGrafIntervallerX()) {
+    for (let i = 1; i <= periodeInputGem; i++) {
       text(`${i}`, (indreGrafX+xInterval)*i, indreGrafY+indreGrafH+10);
     }
   }
-
-  console.log(periodeInputGem);
 }
 
 function opdaterPeriodeOgSum() {
