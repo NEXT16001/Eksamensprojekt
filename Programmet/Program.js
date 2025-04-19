@@ -28,6 +28,8 @@ let inputShopping
 let inputTransport
 let inputAndetForbrug
 let månedensBesparelse
+let antalMånederTilbage
+let beløbTilbage
 let graf
 let grafX
 let grafY
@@ -59,7 +61,6 @@ function setup() {
   indtægterOgUdgifterKnap();
   inputForbrug();
   ForbrugKnap();
-  indreGrafIntervallerX();
 }
 
 function draw() {
@@ -73,6 +74,8 @@ function draw() {
   gemOgOpdaterForbrug();
   tjekForbrug();
   visBesparelse();
+  visAntalMånederTilbage();
+  visBeløbTilbage();
 }
 
 function gåTilbageTilForsiden() {
@@ -83,6 +86,10 @@ function statiskTekst() {
   if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText(), forbrugText(), skabGraf(), skabIndreGraf(),
   indreGrafIntervallerY(), visIndreGrafIntervallerX()) {
     frameRate(0)
+  }
+
+  else {
+    frameRate(60);
   }
 }
 
@@ -136,6 +143,8 @@ function låsPeriodeOgSum() {
   if (periodeInputGem.length > 0) {
     periodeInput.attribute("disabled", "");
   }
+
+  indreGrafIntervallerX();
 }
 
 function inputIndtægterOgUdgifterText() {
@@ -331,6 +340,31 @@ function visBesparelse() {
   }
 }
 
+function opdaterPeriodeOgSum() {
+  beregnBesparelse();
+
+  antalMånederTilbage = periodeInputGem;
+  --antalMånederTilbage
+  beløbTilbage = sumInputGem;
+  beløbTilbage -= månedensBesparelse
+}
+
+function visAntalMånederTilbage() {
+  text(`Antal måneder tilbage: ${antalMånederTilbage}`, windowWidth*1/5, windowHeight/1.25);
+
+  if (antalMånederTilbage == undefined) {
+    antalMånederTilbage = ''
+  }
+}
+
+function visBeløbTilbage() {
+  text(`Beløb tilbage: ${beløbTilbage}`, windowWidth*2.75/5, windowHeight/1.25);
+
+  if (beløbTilbage == undefined) {
+    beløbTilbage = ''
+  }
+}
+
 function skabGraf() {
   grafX = windowWidth/1.55;
   grafY = windowHeight/3.25;
@@ -363,9 +397,7 @@ function indreGrafIntervallerY() {
 }
 
 function indreGrafIntervallerX() {
-  if (periodeOgSumKnap()) {
-    låsPeriodeOgSumKnap.mousePressed(xInterval = indreGrafW/periodeInputGem)
-  }
+  xInterval = indreGrafW/periodeInputGem
   console.log(xInterval)
 }
 
@@ -375,13 +407,4 @@ function visIndreGrafIntervallerX() {
       text(`${i}`, (indreGrafX+xInterval)*i, indreGrafY+indreGrafH+10);
     }
   }
-}
-
-function opdaterPeriodeOgSum() {
-  beregnBesparelse();
-
-  periodeInputGem = --periodeInputGem
-  sumInputGem = sumInputGem-månedensBesparelse
-  console.log(periodeInputGem)
-  console.log(sumInputGem)
 }
