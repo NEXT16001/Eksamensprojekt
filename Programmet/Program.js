@@ -66,16 +66,15 @@ let grafH = windowHeight/3;
 let akseTitleX
 let akseTitleY
 let indreGraf
-let indreGrafX
-let indreGrafY
-let indreGrafW
-let indreGrafH
+let indreGrafX = windowWidth/1.4;
+let indreGrafY = grafY;
+let indreGrafW = windowWidth/4.19;
+let indreGrafH = windowHeight/3.5;
 let vandretLinje
 let yMaks
 let yMin
 let origo
 let xInterval
-let periodeAntal
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -365,11 +364,6 @@ function skabGraf() {
 }
 
 function skabIndreGraf() {
-  indreGrafX = windowWidth/1.4;
-  indreGrafY = grafY;
-  indreGrafW = windowWidth/4.19;
-  indreGrafH = windowHeight/3.5;
-
   indreGraf = rect(indreGrafX, indreGrafY, indreGrafW, indreGrafH)
 
   vandretLinje = line(indreGrafX, indreGrafY+indreGrafH/2, indreGrafX+indreGrafW, indreGrafY+indreGrafH/2)
