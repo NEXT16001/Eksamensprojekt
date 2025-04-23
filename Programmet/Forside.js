@@ -1,7 +1,12 @@
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+let knapStartX = windowWidth/2-55;
+let knapStartY = windowHeight/2+20;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   let knapStart = createButton('Start din besparelsesrejse!');
-  knapStart.position(windowWidth/2-55, windowHeight/2+20);
+  knapStart.position(knapStartX, knapStartY);
   knapStart.mousePressed(skiftSideTilProgram);
   
 }
