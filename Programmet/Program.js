@@ -48,7 +48,7 @@ let inputShoppingGem
 let inputTransportGem
 let inputAndetForbrugGem
 let forbrugKnapX = windowWidth/1.69;
-let forbrugKnapY = textIndtægterOgUdgifterY;
+let forbrugKnapY = windowHeight/2.5+(25*3);
 let månedensBesparelse
 let besparelseX = budgetX;
 let besparelseY = budgetY+25*5.5;
