@@ -76,6 +76,14 @@ let yMin
 let origo
 let xInterval
 
+/**
+ * Function setup inderholder alle de funktioner der kører engang:
+ * "createCanvas()" der danner en canvas ud fra parametrene canvas bredde og -højde.
+ * "createButton()" skaber en knap.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * "element.mousePressed()" er en funktion der kører funktionen inde i parantesen efter der klikkes på elememtet.
+ * Samt resterende funktioner der skal kører en gang, og ikke vises på canvaset.
+ */
 function setup() {
   createCanvas(windowWidth, windowHeight);
   let knapForside = createButton('Forsiden');
@@ -90,6 +98,13 @@ function setup() {
   forbrugKnap();
 }
 
+/**
+ * Function draw er en funktion, der tegner dens indhold på canvaset med 60 FPS.
+ * 
+ * I function draw findes:
+ * "background()" der giver baggrunden en farve, der defineres i parantesen med enten strings eller RGB-kode.
+ * Og funktioner der skal tegnes på canvaset med 60 FPS.
+ */
 function draw() {
   background(255);
   statiskTekst();
@@ -113,10 +128,23 @@ function draw() {
 
 }
 
+/**
+ * Function skiftSideTilProgram() indeholder:
+ * Funktionen "window.location.href" skifter til html-siden, funktionen er lig med.
+ * I dette tilfælde skiftes den til forsiden.
+ */
 function gåTilbageTilForsiden() {
   window.location.href = 'index.html';
 }
 
+/**
+ * Function statiskTekst() er en funktion, der kun kører nævnte funktioner i function draw med 0 FPS.
+ * Den indeholder en "if-statement".
+ * I "If-statement" parantes har vi nogle function hvilket betyder at hvis de nævnes kører indeholdet for funktionen.
+ * Funktionen "frameRate()" hvor indholdet i parantesen definere FPS'en. I dette tilfælde 0.
+ * Dermed har vi også en "else-statement" hvis "if-statement" ikke kører.
+ * "else-statement" indeholder en "frameRate()" funktion med værdien 60, så FPS'en er 60.
+ */
 function statiskTekst() {
   if (inputPeriodeOgSumText(), inputIndtægterOgUdgifterText(), forbrugText(), skabGraf(), skabIndreGraf(),
   indreGrafIntervallerY(), visIndreGrafIntervallerX()) {
@@ -128,6 +156,14 @@ function statiskTekst() {
   }
 }
 
+/**
+ * Function inputPeriodeOgSum() der indeholder:
+ * En "createInput()" funktion der danner en inputfelt.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * Og en "input()" funktion der kalder en funktion, når inputfeltet udfyldes.
+ * 
+ * Følgende funktioner gentages for både "sumInput" og "periodeInput".
+ */
 function inputPeriodeOgSum() {
   sumInput = createInput();
   sumInput.position(sumInputX, inputY);
@@ -138,6 +174,15 @@ function inputPeriodeOgSum() {
   periodeInput.input(gemPeriodeOgSum);
 }
 
+/**
+ * Function inputPeriodeOgSumText() indeholder:
+ * Arrayet "list" med alle de forskellige typer af tekster for periode og sum.
+ * Samt "text()" funktionen hvor der tilføjes en string.
+ * Funktionen "text()" positioneres med x og y, som er x- og y-koordinaterne for tekstens position.
+ * 
+ * Da stringsne er i et array vælges de med funktionen "list[]", hvor klammerne indeholder deres position i form af
+ * nummer.
+ */
 function inputPeriodeOgSumText() {
   let list = ['Hvor meget vil du sparer?', 'kr.', 'Hvor længe vil du sparer?', 'måneder'];
   text(list[0],periodeOgSumTextX1, inputY);
@@ -146,17 +191,37 @@ function inputPeriodeOgSumText() {
   text(list[3], periodeOgSumTextX4, inputY);
 }
 
+/**
+ * Function periodeOgSumKnap() indeholder:
+ * "createButton()" skaber en knap.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * "element.mousePressed()" er en funktion der kører funktionen inde i parantesen efter der klikkes på elememtet.
+ * I dette tilfælde funktionen "låsPeriodeOgSum"
+ */
 function periodeOgSumKnap() {
   let låsPeriodeOgSumKnap = createButton('Ok');
   låsPeriodeOgSumKnap.position(periodeOgSumKnapX, inputY);
   låsPeriodeOgSumKnap.mousePressed(låsPeriodeOgSum);
 }
 
+/**
+ * Function "gemPeriodeOgSum()" indeholder:
+ * Funktionen "input.value()" der gemmmer inputets værdi i den tilhørende variable.
+ * 
+ * Gøres både for periode og sum.
+ */
 function gemPeriodeOgSum() {
   sumInputGem = sumInput.value();
   periodeInputGem = periodeInput.value();
 }
 
+/**
+ * Function "tjekPeriodeOgSum()" indeholder:
+ * En "if-statement" med længden af sumInputGem- eller periodeInputGem, som evalueres til om den har en
+ * værdi på 0.
+ * "if-statement" indeholder en "text()" funktion, der køres hvis sunInputGem- eller periodeInputGem længde
+ * evalueres til 0.
+ */
 function tjekPeriodeOgSum() {
   if (sumInputGem.length == 0) {
     text('Udfyld alle feltet!', tjekSumX, tjekPeriodeOgSumY);
@@ -167,6 +232,17 @@ function tjekPeriodeOgSum() {
   }
 }
 
+/**
+ * Function "låsPeriodeOgSum()" indeholder:
+ * En "if-statement" der viser at sumInputGem- og periodeInputGem længde er større end 0.
+ * 
+ * Hvis det er korrekt udføres indeholdet som er:
+ * "attribute" der kan udføre små opgaver for den valgte element.
+ * I vores tilfælde er det 'disabled' som betyder deaktiveret.
+ * Derfor deaktiveres den nævnte element.
+ * 
+ * Derudover kaldes funktionen "indreGrafIntervallerX()"
+ */
 function låsPeriodeOgSum() {
   if (sumInputGem.length > 0 && periodeInputGem.length > 0) {
     sumInput.attribute('disabled', '');
@@ -176,10 +252,23 @@ function låsPeriodeOgSum() {
   indreGrafIntervallerX();
 }
 
+/**
+ * Function "inputIndtægterOgUdgifterText()" indeholder:
+ * Arrayet "indtægterOgUdgifterText()" der indeholder alle teksterne i form a strings.
+ * Og "if-statements" samt "for-lykker" der tegner teksterne på canvaset.
+ */
 function inputIndtægterOgUdgifterText() {
   indtægterOgUdgifterText = ['Månedens netto indkomst', 'Husleje', 'Forsikringsafgifter', 
   'Andre udgifter evt. lån'];
   
+  /**
+   * "if-statement" parantes indeholder en ligning, der siger: at hvis textIndtægterOgUdgifterY er større end
+   * 20, som er den lodret distance af teksterne er indenfor, multipliceret med indtægterOgUdgifterText længde, 
+   * subtraheret med 1, adderet en kvart af vindues højden.
+   * 
+   * Hvis dette er sandt er textIndtægterOgUdgifterY lig med windowHeight/2.5.
+   * Derudover tegner den teksterne for den første inputfelt i indtægter og udgifter med funktionen "text()".
+   */
   if (textIndtægterOgUdgifterY > (20*(indtægterOgUdgifterText.length-1))+windowHeight/4) {
     textIndtægterOgUdgifterY = windowHeight/2.5
 
@@ -187,6 +276,13 @@ function inputIndtægterOgUdgifterText() {
     text('kr.', textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
   }
 
+  /**
+   * I "for-lykken" parentes står der at en variable "i", er lig 1 og mindre end indtægterOgUdgifterText længde
+   * og i indkrementeres.
+   * 
+   * Hvis det er sandt, adderes textIndtægterOgUdgifterY løbende med 25, og textIndtægterOgUdgifterX er lig 1.
+   * Dermed tegnes de resternede tekster i indtægter og udgifter.
+   */
   for (let i = 1; i < indtægterOgUdgifterText.length; i++) {
     textIndtægterOgUdgifterY += 25;
     textIndtægterOgUdgifterX = 1;
@@ -196,6 +292,14 @@ function inputIndtægterOgUdgifterText() {
   }
 }
 
+/**
+ * Function inputIndtægterOgUdgifter() der indeholder:
+ * En "createInput()" funktion der danner en inputfelt.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * Og en "input()" funktion der kalder en funktion, når inputfeltet udfyldes.
+ * 
+ * Følgende funktioner gentages for alle inputfelter i indtægter og udgifter.
+ */
 function inputIndtægterOgUdgifter() {
   inputLøn = createInput();
   inputLøn.position(inputIndtægterOgUdgifterX, textIndtægterOgUdgifterY);
@@ -217,12 +321,25 @@ function inputIndtægterOgUdgifter() {
   inputAndreUdgifter.input(gemOgOpdaterIndtægterOgUdgifter)
 }
 
+/**
+ * Function indtægterOgUdgifterKnap() indeholder:
+ * "createButton()" skaber en knap.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * "element.mousePressed()" er en funktion der kører funktionen inde i parantesen efter der klikkes på elememtet.
+ * I dette tilfælde funktionen "beregnBudget"
+ */
 function indtægterOgUdgifterKnap() {
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(låsIndtægterOgUdgifterKnapX, textIndtægterOgUdgifterY);
   låsIndtægterOgUdgifterKnap.mousePressed(beregnBudget);
 }
 
+/**
+ * Function "gemPeriodeOgSum()" indeholder:
+ * Funktionen "input.value()" der gemmmer inputets værdi i den tilhørende variable.
+ * 
+ * Gøres for alle inputfelter i indtægter og udgifter.
+ */
 function gemOgOpdaterIndtægterOgUdgifter(){
   inputLønGem = inputLøn.value();
   inputHuslejeGem = inputHusleje.value();
@@ -230,6 +347,13 @@ function gemOgOpdaterIndtægterOgUdgifter(){
   inputAndreUdgifterGem = inputAndreUdgifter.value();
 }
 
+/**
+ * Function "tjekIndtægterOgUdgifter()" indeholder:
+ * En "if-statement" hvis parentes siger:
+ * At hvis en af inputGem værdierne evalueres til at være 0.
+ * 
+ * Hvis det er sandt tegnes en tekst via. funktionen "text()".
+ */
 function tjekIndtægterOgUdgifter() {
   if (inputLønGem.length == 0 || inputHuslejeGem.length == 0 || inputForsikringsafgifterGem.length == 0 ||
     inputAndreUdgifterGem.length == 0) {
@@ -237,6 +361,15 @@ function tjekIndtægterOgUdgifter() {
   }
 }
 
+/**
+ * Function "låsIndtægterOgUdgifter()" indeholder:
+ * En "if-statement" der viser at InputGem værdiernes længde er større end 0.
+ * 
+ * Hvis det er korrekt udføres indeholdet som er:
+ * "attribute" der kan udføre små opgaver for den valgte element.
+ * I vores tilfælde er det 'disabled' som betyder deaktiveret.
+ * Derfor deaktiveres den nævnte element.
+ */
 function låsIndtægterOgUdgifter() {
   if (inputLønGem.length > 0 && inputHuslejeGem.length > 0 && inputForsikringsafgifterGem.length > 0 &&
     inputAndreUdgifterGem.length > 0) {
@@ -247,6 +380,13 @@ function låsIndtægterOgUdgifter() {
   }
 }
 
+/**
+ * Function "beregnBudget()" inderholder:
+ * Først og fremmest kaldes låsIndtægterOgUdgifter().
+ * Dermed beregnes den forventede besparelse, ved at dividere sumInputGem med periodeInputGem.
+ * Derefter beregnes månedens budget, ved at den forventede besparelse og de tre sidste inputfelter i indtægter og
+ * udgifter subtraheres fra inputLønGem.
+ */
 function beregnBudget() {
   låsIndtægterOgUdgifter();
   ForventetBesparelse = sumInputGem/periodeInputGem;
@@ -254,6 +394,13 @@ function beregnBudget() {
   inputAndreUdgifterGem;
 }
 
+/**
+ * Function "visBudget()" indeholder:
+ * En "text()" funktion hvor stringen erstattes med en Template Literals, så måndensBudget kan inddrages i teksten.
+ * 
+ * Og en "if-statement" hvis parentes indeholder en ligning, der evaluer on månedensBudget er lig 0.
+ * "if-statement" indeholder en ligning, der gøre månedensBudget lig med intet hvis "if-statment" er sandt.
+ */
 function visBudget() {
   text(`Månedens budget: ${månedensBudget} kr.`,budgetX ,budgetY);
 
@@ -262,14 +409,35 @@ function visBudget() {
   }
 }
 
+/**
+ * Function "forbrugText()" indeholder:
+ * Arrayet "indtægterOgUdgifterText()" der indeholder alle teksterne i form a strings.
+ * Og "if-statements" samt "for-lykker" der tegner teksterne på canvaset.
+ */
 function forbrugText() {
   let forbrugList = ['Mad og drikke', 'Shopping', 'Transport', 'Andet forbrug'];
   forbrugTextY = windowHeight/2.5;
+  
+  /**
+   * "if-statement" parantes indeholder en ligning, der siger: at hvis forbrugTextY er større end
+   * 20, som er den lodret distance af teksterne er indenfor, multipliceret med forbrugList længde, 
+   * subtraheret med 1, adderet en kvart af vindues højden.
+   * 
+   * Hvis dette er sandt tegnet den teksterne for den første inputfelt i forburg og udgifter med funktionen 
+   * "text()".
+   */
   if (forbrugTextY > (20*(forbrugList.length-1))+windowHeight/4) {
     text(forbrugList[0], forbrugTextX1, forbrugTextY)
     text('kr.', forbrugTextX2, forbrugTextY)
   }
 
+  /**
+   * I "for-lykken" parentes står der at en variable "i", er lig 1 og mindre end forbrugList længde
+   * og i indkrementeres.
+   * 
+   * Hvis det er sandt, adderes forbrugTextY løbende med 25.
+   * Dermed tegnes de resternede tekster i forbrug.
+   */
   for (i = 1; i < forbrugList.length; i++) {
     forbrugTextY += 25;
     text(forbrugList[i], forbrugTextX1, forbrugTextY);
@@ -277,6 +445,14 @@ function forbrugText() {
   }
 }
 
+/**
+ * Function inputForbrug() der indeholder:
+ * En "createInput()" funktion der danner en inputfelt.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * Og en "input()" funktion der kalder en funktion, når inputfeltet udfyldes.
+ * 
+ * Følgende funktioner gentages for alle inputfelter i forbrug.
+ */
 function inputForbrug() {
   inputMadOgDrikke = createInput();
   inputMadOgDrikke.position(inputForbrugX, inputForbrugY);
@@ -298,6 +474,12 @@ function inputForbrug() {
   inputAndetForbrug.input(gemOgOpdaterForbrug)
 }
 
+/**
+ * Function "gemOgOpdaterForbrug()" indeholder:
+ * Funktionen "input.value()" der gemmmer inputets værdi i den tilhørende variable.
+ * 
+ * Gøres for alle inputfelter i forbrug.
+ */
 function gemOgOpdaterForbrug(){
   inputMadOgDrikkeGem = inputMadOgDrikke.value();
   inputShoppingGem = inputShopping.value();
@@ -305,12 +487,26 @@ function gemOgOpdaterForbrug(){
   inputAndetForbrugGem = inputAndetForbrug.value();
 }
 
+/**
+ * Function forbrugKnap() indeholder:
+ * "createButton()" skaber en knap.
+ * "element.position()" positionere et element ud fra parametrene x og y.
+ * "element.mousePressed()" er en funktion der kører funktionen inde i parantesen efter der klikkes på elememtet.
+ * I dette tilfælde funktionen "opdaterPeriodeOgSum"
+ */
 function forbrugKnap() {
   let låsIndtægterOgUdgifterKnap = createButton("Ok");
   låsIndtægterOgUdgifterKnap.position(forbrugKnapX, forbrugKnapY);
   låsIndtægterOgUdgifterKnap.mousePressed(opdaterPeriodeOgSum);
 }
 
+/**
+ * Function "tjekForbrug()" indeholder:
+ * En "if-statement" hvis parentes siger:
+ * At hvis en af inputGem værdierne evalueres til at være 0.
+ * 
+ * Hvis det er sandt tegnes en tekst via. funktionen "text()".
+ */
 function tjekForbrug() {
   if (inputMadOgDrikkeGem.length == 0 || inputShoppingGem.length == 0 || inputTransportGem.length == 0 ||
     inputAndetForbrugGem.length == 0) {
@@ -318,11 +514,22 @@ function tjekForbrug() {
   }
 }
 
+/**
+ * Function "beregnBesparelse" beregner besparelsen for måneden, som subtrahere den forventede besparelse og alle
+ * inputGem variablerne for forbrug med månedens budget.
+ */
 function beregnBesparelse() {
   månedensBesparelse = månedensBudget-inputMadOgDrikkeGem-inputShoppingGem-inputTransportGem-inputAndetForbrugGem+
   ForventetBesparelse;
 }
 
+/**
+ * Function isBesparelse()" indeholder:
+ * En "text()" funktion hvor stringen erstattes med en Template Literals, så månedensBesparelse kan inddrages i teksten.
+ * 
+ * Og en "if-statement" hvis parentes indeholder en ligning, der evaluer on månedensBesparelse er lig 0.
+ * "if-statement" indeholder en ligning, der gøre månedensBesparelse lig med intet hvis "if-statment" er sandt.
+ */
 function visBesparelse() {
   text(`Månedens besparelse: ${månedensBesparelse} kr.`,besparelseX ,besparelseY);
 
@@ -331,6 +538,14 @@ function visBesparelse() {
   }
 }
 
+/**
+ * Function "opdaterPeriodeOgSum()" inderholder:
+ * Funktionen "beregnBesparelse()" kaldes.
+ * Variablen antalMånederTilbage sættes lig med periodeInputGem.
+ * Variablen antalMånederTilbage dekrementeres.
+ * Variablen beløbTilbage sættes lig med periodeInputGem.
+ * Variablen beløbTilbage dekrementeres.
+ */
 function opdaterPeriodeOgSum() {
   beregnBesparelse();
 
@@ -340,6 +555,14 @@ function opdaterPeriodeOgSum() {
   beløbTilbage -= månedensBesparelse
 }
 
+/**
+ * Function visAntalMånederTilbage()" indeholder:
+ * En "text()" funktion hvor stringen erstattes med en Template Literals, så antalMånederTilbage kan inddrages i 
+ * teksten.
+ * 
+ * Og en "if-statement" hvis parentes indeholder en ligning, der evaluer on antalMånederTilbage er lig 0.
+ * "if-statement" indeholder en ligning, der gøre antalMånederTilbage lig med intet hvis "if-statment" er sandt.
+ */
 function visAntalMånederTilbage() {
   text(`Antal måneder tilbage: ${antalMånederTilbage}`, antalMånederTilbageX, antalMånederTilbageY);
 
@@ -348,6 +571,14 @@ function visAntalMånederTilbage() {
   }
 }
 
+/**
+ * Function visAntalMånederTilbage()" indeholder:
+ * En "text()" funktion hvor stringen erstattes med en Template Literals, så beløbTilbage kan inddrages i 
+ * teksten.
+ * 
+ * Og en "if-statement" hvis parentes indeholder en ligning, der evaluer on beløbTilbage er lig 0.
+ * "if-statement" indeholder en ligning, der gøre beløbTilbage lig med intet hvis "if-statment" er sandt.
+ */
 function visBeløbTilbage() {
   text(`Beløb tilbage: ${beløbTilbage}`, beløbTilbageX, beløbTilbageY);
 
@@ -356,6 +587,16 @@ function visBeløbTilbage() {
   }
 }
 
+/**
+ * Function "skabGraf()" indeholder:
+ * En funktion "rect()" der danner rammen for graffen gennem parametrene:
+ * x som er x-koordinatet for rammens venstre-øverste hjørne.
+ * y som er y-koordinatet for rammens venstre-øverste hjørne.
+ * w som er rammens bredde.
+ * h som er rammens højde.
+ * 
+ * Dermed dannes der aksetitler udfra funktionen "text()".
+ */
 function skabGraf() {
   graf = rect(grafX, grafY, grafW, grafH);
 
@@ -363,12 +604,34 @@ function skabGraf() {
   akseTitleY = text('Antal Måneder', grafW/2+grafX-10, grafY+grafH-2.5);
 }
 
+/**
+ * Function "skabIndreGraf()" indeholder:
+ * En funktion "rect()" der danner den indre ramme for graffen gennem parametre:
+ * x som er x-koordinatet for rammens venstre-øverste hjørne.
+ * y som er y-koordinatet for rammens venstre-øverste hjørne.
+ * w som er rammens bredde.
+ * h som er rammens højde.
+ * 
+ * Dermed danner funktionen "line()" x-aksen udfra følgende parametre:
+ * x1 og y1 som er koordinaterne for linjens begyndelsespunkt.
+ * x2 og y2 som er koordinaterne for linjens slutpunkt.
+ */
 function skabIndreGraf() {
   indreGraf = rect(indreGrafX, indreGrafY, indreGrafW, indreGrafH)
 
   vandretLinje = line(indreGrafX, indreGrafY+indreGrafH/2, indreGrafX+indreGrafW, indreGrafY+indreGrafH/2)
 }
 
+/**
+ * Function "indreGrafIntervallerY()" indeholder:
+ * Origo der dannes udfra "text()" funktionen.
+ * 
+ * Også en "if-statement" hvis parentes siger at sumInputGem er større end 0.
+ * Hvis det er sandt, dannes yMaks, som er summen af besparelsen, og -yMin som er summen af besparelse i form af
+ * negativ tal.
+ * 
+ * Dermed tegnes både yMaks og yMin i form af "text()" funktioner, hvor strings er erstattet med Template Literals.
+ */
 function indreGrafIntervallerY() {
   origo = text('0', indreGrafX-10, indreGrafY+indreGrafH/2+5);
 
@@ -378,11 +641,19 @@ function indreGrafIntervallerY() {
   }
 }
 
+/**
+ * Function indreGrafIntervallerX() beregner afstanden mellem x-værdierne i x-aksen:
+ * Det gøres ved at indreGrafW divideres med periodeInputGem.
+ */
 function indreGrafIntervallerX() {
   xInterval = indreGrafW/periodeInputGem
-  console.log(xInterval)
 }
 
+/**
+ * OBS: Funktionen blev ikke skrevet færdig.
+ * 
+ * Var i gang med at danne en funktion, der vil tegne x-værdierne i x-aksen.
+ */
 function visIndreGrafIntervallerX() {
   if (indreGrafIntervallerX()) {
     for (let i = 1; i <= periodeInputGem; i++) {
