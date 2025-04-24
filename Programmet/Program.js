@@ -139,7 +139,7 @@ function inputPeriodeOgSum() {
 }
 
 function inputPeriodeOgSumText() {
-  let list = ["Hvor meget vil du sparer?", "kr.", "Hvor længe vil du sparer?", "måneder"];
+  let list = ['Hvor meget vil du sparer?', 'kr.', 'Hvor længe vil du sparer?', 'måneder'];
   text(list[0],periodeOgSumTextX1, inputY);
   text(list[1], periodeOgSumTextX2, inputY);
   text(list[2], periodeOgSumTextX3, inputY);
@@ -147,7 +147,7 @@ function inputPeriodeOgSumText() {
 }
 
 function periodeOgSumKnap() {
-  let låsPeriodeOgSumKnap = createButton("Ok");
+  let låsPeriodeOgSumKnap = createButton('Ok');
   låsPeriodeOgSumKnap.position(periodeOgSumKnapX, inputY);
   låsPeriodeOgSumKnap.mousePressed(låsPeriodeOgSum);
 }
@@ -159,32 +159,32 @@ function gemPeriodeOgSum() {
 
 function tjekPeriodeOgSum() {
   if (sumInputGem.length == 0) {
-    text("Udfyld alle feltet!", tjekSumX, tjekPeriodeOgSumY);
+    text('Udfyld alle feltet!', tjekSumX, tjekPeriodeOgSumY);
   }
   
   if (periodeInputGem.length == 0) {
-    text("Udfyld alle feltet!", tjekPeriodeX, tjekPeriodeOgSumY);
+    text('Udfyld alle feltet!', tjekPeriodeX, tjekPeriodeOgSumY);
   }
 }
 
 function låsPeriodeOgSum() {
   if (sumInputGem.length > 0 && periodeInputGem.length > 0) {
-    sumInput.attribute("disabled", "");
-    periodeInput.attribute("disabled", "");
+    sumInput.attribute('disabled', '');
+    periodeInput.attribute('disabled', '');
   }
 
   indreGrafIntervallerX();
 }
 
 function inputIndtægterOgUdgifterText() {
-  indtægterOgUdgifterText = ["Månedens netto indkomst", "Husleje", "Forsikringsafgifter", 
-  "Andre udgifter evt. lån"];
+  indtægterOgUdgifterText = ['Månedens netto indkomst', 'Husleje', 'Forsikringsafgifter', 
+  'Andre udgifter evt. lån'];
   
   if (textIndtægterOgUdgifterY > (20*(indtægterOgUdgifterText.length-1))+windowHeight/4) {
     textIndtægterOgUdgifterY = windowHeight/2.5
 
     text(indtægterOgUdgifterText[0], textIndtægterOgUdgifterX = 1, textIndtægterOgUdgifterY)
-    text("kr.", textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
+    text('kr.', textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
   }
 
   for (let i = 1; i < indtægterOgUdgifterText.length; i++) {
@@ -192,7 +192,7 @@ function inputIndtægterOgUdgifterText() {
     textIndtægterOgUdgifterX = 1;
 
     text(indtægterOgUdgifterText[i], textIndtægterOgUdgifterX, textIndtægterOgUdgifterY)
-    text("kr.", textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
+    text('kr.', textIndtægterOgUdgifterX = windowWidth/3.75, textIndtægterOgUdgifterY)
   }
 }
 
@@ -233,17 +233,17 @@ function gemOgOpdaterIndtægterOgUdgifter(){
 function tjekIndtægterOgUdgifter() {
   if (inputLønGem.length == 0 || inputHuslejeGem.length == 0 || inputForsikringsafgifterGem.length == 0 ||
     inputAndreUdgifterGem.length == 0) {
-    text("Udfyld alle felter!", tjekIndtægterOgUdgifterX, inputIndtægterOgUdgifterY);
+    text('Udfyld alle felter!', tjekIndtægterOgUdgifterX, inputIndtægterOgUdgifterY);
   }
 }
 
 function låsIndtægterOgUdgifter() {
   if (inputLønGem.length > 0 && inputHuslejeGem.length > 0 && inputForsikringsafgifterGem.length > 0 &&
     inputAndreUdgifterGem.length > 0) {
-    inputLøn.attribute("disabled", "");
-    inputHusleje.attribute("disabled", "");
-    inputForsikringsafgifter.attribute("disabled", "");
-    inputAndreUdgifter.attribute("disabled", "");
+    inputLøn.attribute('disabled', '');
+    inputHusleje.attribute('disabled', '');
+    inputForsikringsafgifter.attribute('disabled', '');
+    inputAndreUdgifter.attribute('disabled', '');
   }
 }
 
@@ -258,22 +258,22 @@ function visBudget() {
   text(`Månedens budget: ${månedensBudget} kr.`,budgetX ,budgetY);
 
   if (månedensBudget == undefined) {
-    månedensBudget = ""
+    månedensBudget = ''
   }
 }
 
 function forbrugText() {
-  let forbrugList = ["Mad og drikke", "Shopping", "Transport", "Andet forbrug"];
+  let forbrugList = ['Mad og drikke', 'Shopping', 'Transport', 'Andet forbrug'];
   forbrugTextY = windowHeight/2.5;
   if (forbrugTextY > (20*(forbrugList.length-1))+windowHeight/4) {
     text(forbrugList[0], forbrugTextX1, forbrugTextY)
-    text("kr.", forbrugTextX2, forbrugTextY)
+    text('kr.', forbrugTextX2, forbrugTextY)
   }
 
   for (i = 1; i < forbrugList.length; i++) {
     forbrugTextY += 25;
     text(forbrugList[i], forbrugTextX1, forbrugTextY);
-    text("kr.", forbrugTextX2, forbrugTextY)
+    text('kr.', forbrugTextX2, forbrugTextY)
   }
 }
 
@@ -314,7 +314,7 @@ function forbrugKnap() {
 function tjekForbrug() {
   if (inputMadOgDrikkeGem.length == 0 || inputShoppingGem.length == 0 || inputTransportGem.length == 0 ||
     inputAndetForbrugGem.length == 0) {
-    text("Udfyld alle felter!", inputForbrugX, windowHeight/2.5+(25*4));
+    text('Udfyld alle felter!', inputForbrugX, windowHeight/2.5+(25*4));
   }
 }
 
@@ -327,7 +327,7 @@ function visBesparelse() {
   text(`Månedens besparelse: ${månedensBesparelse} kr.`,besparelseX ,besparelseY);
 
   if (månedensBesparelse == undefined) {
-    månedensBesparelse = ""
+    månedensBesparelse = ''
   }
 }
 
